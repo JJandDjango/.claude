@@ -1,0 +1,47 @@
+{
+  "version": "1.0.0",
+  "defaults": {
+    "model": "sonnet",
+    "maxRetries": 3,
+    "autoFixLoop": {
+      "enabled": true,
+      "maxAttempts": 5
+    }
+  },
+  "threads": {
+    "base": {
+      "trustLevel": "low",
+      "requiresHumanReview": true
+    },
+    "chained": {
+      "trustLevel": "high",
+      "requiresHandoff": true,
+      "requiresVerifier": true
+    },
+    "long": {
+      "trustLevel": "high",
+      "maxToolCalls": 200,
+      "autoFixEnabled": true
+    },
+    "zeroTouch": {
+      "trustLevel": "critical",
+      "requiresTestCoverage": 100,
+      "requiresVerifierPass": true
+    }
+  },
+  "agents": {
+    "developer": {
+      "persona": "optimistic",
+      "color": "red"
+    },
+    "verifier": {
+      "persona": "pessimistic",
+      "color": "green",
+      "zeroTrust": true
+    },
+    "doc-explorer": {
+      "persona": "methodical",
+      "color": "blue"
+    }
+  }
+}

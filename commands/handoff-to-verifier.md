@@ -2,7 +2,7 @@
 name: Handoff-To-Verifier
 description: Prepares a technical handoff report and triggers the Verifier Agent for a Review Thread.
 allowed-tools: Bash, Read, Write, Glob
-model: sonnet-3.5
+model: sonnet
 ---
 
 # Purpose

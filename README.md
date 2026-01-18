@@ -58,5 +58,7 @@ No code is considered "Done" until the Senior Verifier provides a PASS grade. Th
 4. Maximizing Autonomy
 For large refactors, use the Auto-Fix-Loop command. This enables Long Thread behavior, allowing the agent to recursively fix linting and test failures until the code reaches a deterministic success state.
 
+> **Note**: The "Ralph Wiggum" pattern refers to an agent that persists cheerfully through failures without realizing it's stuck—the auto-fix loop adds self-awareness by tracking attempts and knowing when to stop.
+
 ## 📜 Compliance
 All agents and skills must adhere to the formatting standards defined in primitives/patterns/agentic-patterns.md. New capabilities must be registered in registry.json to ensure agent-to-agent discoverability.

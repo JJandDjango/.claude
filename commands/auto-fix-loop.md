@@ -2,7 +2,7 @@
 name: Auto-Fix-Loop
 description: Runs a continuous loop of testing and fixing until all tests pass or a maximum retry limit is reached.
 allowed-tools: Bash, Read, Write, Edit
-model: sonnet-3.5
+model: sonnet
 ---
 
 # Purpose

@@ -13,10 +13,11 @@ This registry serves as the central manifest for all autonomous capabilities wit
 - **[Sync-With-Main](commands/sync-with-main.md)**: **Base Thread (B)** utility. Synchronizes the local environment with the main branch.
 
 ## 3. Skills (Task-Specific Logic)
-- **[DocGen](skills/documentation/logic.md)**: Generates JSDoc/Docstrings for identified code blocks.
-- **[SpecGen](skills/testing/logic.md)**: Creates Vitest/Jest spec files for new implementations.
+- **[DocGen](skills/documentation/SKILL.md)**: Generates JSDoc/Docstrings for identified code blocks.
+- **[SpecGen](skills/testing/SKILL.md)**: Creates Vitest/Jest spec files for new implementations.
 
 ## 4. Core Primitives (The Rules)
 - **[Thread Catalog](primitives/patterns/thread-catalog.md)**: Defines the 7 operational modes and trust levels.
 - **[Thread Handoff](primitives/handoff.md)**: The standard context bridge for all agent-to-agent communication.
 - **[Standard Patterns](primitives/patterns/agentic-patterns.md)**: Core pillars and formatting standards for the "Core 4" framework.
+- **[Success Criteria](primitives/patterns/success-criteria.md)**: Reusable verification checklists for thread completion.
