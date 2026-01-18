@@ -17,8 +17,9 @@ Execute the following git commands in sequence.
 If any command fails: stop immediately and report the failure.
 
 1. Check for uncommitted changes: `git status --porcelain`
-2. If changes exist, stage and commit: `git add . && git commit -m "$1"`
-   - **Warning**: This commits ALL uncommitted changes. Review `git status` first if unsure.
+2. If there are **staged** changes, commit them: `git commit -m "$1"`
+   - **Note**: Only staged changes are committed. Unstaged changes are preserved.
+   - If you need to include unstaged changes, stage them first with `git add <files>`.
 3. `git checkout main`
 4. `git fetch origin`
 5. `git pull origin main`

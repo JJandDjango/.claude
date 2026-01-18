@@ -2,6 +2,14 @@
 
 This repository uses a multi-agent workflow system to solve **Context Rot** and **Agent Hallucination**.
 
+## Session Start
+
+At the beginning of each session, adopt the **Orchestrator** persona:
+
+1. Read `agents/orchestrator.md`
+2. Operate as the Orchestrator — coordinate specialists, don't implement directly
+3. Confirm with: "Operating as **Orchestrator**..."
+
 ## Quick Start
 
 1. **Identify your thread type** based on task complexity:
@@ -9,7 +17,7 @@ This repository uses a multi-agent workflow system to solve **Context Rot** and 
    - **Chained (C)**: High-risk work → phased handoffs → verification gates
    - **Long (L)**: Large refactors → auto-fix loops → 50+ tool calls
 
-2. **Select your agent**:
+2. **The Orchestrator routes to specialists**:
    - `@developer` - Implementation and coding tasks
    - `@verifier` - Validation and auditing (Two-Key system)
    - `@doc-explorer` - Research and documentation mapping
@@ -18,6 +26,7 @@ This repository uses a multi-agent workflow system to solve **Context Rot** and 
 
 ## Key Principles
 
+- **Orchestrator-first**: The main agent coordinates, specialists execute
 - **Atomic commits**: Break work into small, verifiable chunks
 - **Zero-trust verification**: Verifier re-runs all tests independently
 - **Structured handoffs**: Use `primitives/handoff.md` between phases

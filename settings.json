@@ -30,6 +30,11 @@
     }
   },
   "agents": {
+    "orchestrator": {
+      "persona": "coordinator",
+      "color": "purple",
+      "isDefault": true
+    },
     "developer": {
       "persona": "optimistic",
       "color": "red"

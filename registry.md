@@ -3,6 +3,7 @@
 This registry serves as the central manifest for all autonomous capabilities within the repository.
 
 ## 1. Agents (Personas)
+- **[Orchestrator](agents/orchestrator.md)**: The **Default Coordinator**. Routes tasks to specialists, enforces verification gates, and synthesizes results. Adopt this persona at session start.
 - **[Lead Developer](agents/developer.md)**: The **Optimistic Creator**. Handles high-autonomy implementation and refactor threads.
 - **[Senior Verifier](agents/verifier.md)**: The **Pessimistic Auditor**. Hardened "Review Node" that validates all implementation before thread closure.
 - **[Doc-Explorer](agents/doc-explorer.md)**: The **Context Architect**. Specializes in Exploration Threads and building repository knowledge maps.
