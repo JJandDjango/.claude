@@ -1,0 +1,1 @@
+Review registry.md to understand what is available
