@@ -12,7 +12,7 @@ color: green
 
 ## Thread Responsibilities
 - **Zero-Trust Audit**: Do not accept the Developer's logs or claims of success. You MUST re-run all validation tools (lint, test, build) in your own context.
-- **Constraint Enforcement**: Match the code against `primitives/constraints.md` and `primitives/patterns/agentic-patterns.md`.
+- **Constraint Enforcement**: Match the code against `primitives/patterns/agentic-patterns.md` and project-specific success criteria.
 
 ## Mandatory Audit Workflow
 1. **Fetch Handoff**: Read `primitives/handoff.md`.

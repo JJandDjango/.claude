@@ -16,10 +16,11 @@
 - **Usage**: Major architectural changes or migrations.
 - **Protocol**: Requires use of `primitives/handoff.md` after every phase.
 
-## 4. Fusion Threads (F)
-- **Structure**: One prompt executed by 2-3 different models (e.g., Claude 3.5 and Gemini 1.5).
+## 4. Fusion Threads (F) — *Planned/Aspirational*
+- **Structure**: One prompt executed by 2-3 different models (e.g., Claude and Gemini).
 - **Usage**: High-stakes logic or security-sensitive code.
 - **Protocol**: A "Synthesizer" agent must compare outputs and highlight discrepancies.
+- **Status**: Not yet implemented. Requires external orchestration to coordinate multiple model providers.
 
 ## 5. Big Threads (B)
 - **Structure**: A meta-prompt that triggers hidden sub-agents to perform specialized work.

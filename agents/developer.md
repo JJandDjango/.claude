@@ -23,5 +23,5 @@ color: red
 
 ## Constraints
 - Do not bypass the Verifier.
-- Follow the patterns in `primitives/agentic_patterns.md`.
+- Follow the patterns in `primitives/patterns/agentic-patterns.md`.
 - Ensure all new logic includes a corresponding test file.
