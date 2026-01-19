@@ -15,6 +15,7 @@ This registry serves as the central manifest for all autonomous capabilities wit
 ## 3. Skills (Task-Specific Logic)
 - **[DocGen](skills/documentation/logic.md)**: Generates JSDoc/Docstrings for identified code blocks.
 - **[SpecGen](skills/testing/logic.md)**: Creates Vitest/Jest spec files for new implementations.
+- **[Product-Spec-Interview](skills/product-specification-interview/SKILL.md)**: **Chained Thread (C)** skill. Generates product specifications through structured interviews with multi-phase validation.
 
 ## 4. Core Primitives (The Rules)
 - **[Thread Catalog](primitives/patterns/thread-catalog.md)**: Defines the 7 operational modes and trust levels.

@@ -1,0 +1,339 @@
+# Example Handoff Payload
+
+This is a concrete example of a handoff payload mid-interview. Use this as a reference when implementing.
+
+---
+
+## Example: Checkout Optimization Project — Mid-Interview
+
+```yaml
+schema_version: "1.0"
+
+# === SESSION METADATA ===
+session:
+  id: "spec-20250113-checkout-optimization"
+  project_name: "E-commerce Checkout Optimization"
+  created_at: "2025-01-13T10:00:00Z"
+  updated_at: "2025-01-13T11:45:00Z"
+  instance_count: 2
+
+# === ROUTING STATE ===
+routing:
+  phase: "INTERVIEW"
+  current_module: "interview-full-existing.md"
+  current_section: 5
+  sections_complete: [1, 2, 3, 4]
+  next_action: "Begin Section 5: Technical Context"
+  resume_point: "Sections 1-4 complete. Scope captured: Keep 3, Modify 2, Add 2, Remove 1. Begin Section 5, Q1: 'What's the current architecture?'"
+
+# === CLASSIFICATION STATE ===
+classification:
+  type: "EXISTING"
+  complexity: "MEDIUM"
+  format: "MARKDOWN"
+
+# === HARD REQUIREMENTS ===
+hard_reqs:
+  problem_statement:
+    value: "Mobile checkout flow takes 12+ seconds causing 68% cart abandonment among mobile shoppers, resulting in approximately $50,000/month in lost revenue"
+    quality_passed: true
+    quality_notes: null
+  success_metric:
+    value: "Reduce cart abandonment rate from 68% to 45% within 90 days of launch"
+    quality_passed: true
+    quality_notes: null
+  must_have_feature:
+    value: "One-click checkout for returning customers: Works when user completes purchase without re-entering payment info, verified by <2 second completion time"
+    quality_passed: true
+    quality_notes: null
+  primary_user:
+    value: "Mobile shoppers on iOS/Android completing purchases during commute or lunch breaks"
+    quality_passed: true
+    quality_notes: null
+
+# === SOFT REQUIREMENTS ===
+soft_reqs:
+  technical_constraints: "Must integrate with existing Stripe setup; Rails 7 backend; Heroku deployment"
+  key_risk: "Stripe API changes could break saved payment token flow"
+  timeline: "Q2 2025 launch, ideally before May 15 sale event"
+
+# === FLAGS ===
+flags:
+  escalation_triggered: false
+  escalation_from: null
+  checkpoint_offered: true
+  materials_processed: true
+  gate_passed: false
+  output_generated: false
+  user_confirmed_readback: false
+
+# === INTERVIEW DATA ===
+interview_data:
+  section_1_problem:
+    problem: "Checkout flow is too slow on mobile"
+    who_affected: "Mobile shoppers, particularly during commute hours"
+    why_matters: "$50K/month lost revenue, competitive disadvantage vs Amazon 1-click"
+    cost_of_not_solving: "$600K annually, plus brand perception damage"
+    previous_attempts:
+      - "Tried CDN for static assets — marginal improvement"
+      - "A/B tested simplified form — helped but not enough"
+    confidence: "HIGH"
+    
+  section_2_users:
+    personas:
+      - name: "Commute Shopper"
+        goals: "Quick purchase during 10-min train ride"
+        workflow: "Browse on desktop at work → save to cart → buy on phone during commute"
+        pain_points:
+          - "Form fields too small on mobile"
+          - "Have to re-enter card every time"
+          - "Page reloads lose cart context"
+        technical_level: "INTERMEDIATE"
+        success_looks_like: "Purchase complete before reaching destination"
+      - name: "Lunch Break Buyer"
+        goals: "Quick impulse purchase"
+        workflow: "See ad on social → click through → buy immediately"
+        pain_points:
+          - "Too many steps from ad to confirmation"
+          - "Guest checkout is slow"
+        technical_level: "NOVICE"
+        success_looks_like: "Ad to confirmation in under 60 seconds"
+    secondary_users:
+      - "Customer support (fewer abandoned cart inquiries)"
+      - "Marketing team (better conversion attribution)"
+    
+  section_3_stakeholders:
+    owner: "Jamie Chen (Product Lead)"
+    approvers:
+      - "Sarah Kim (VP Engineering)"
+      - "Marcus Johnson (Head of E-commerce)"
+    consulted:
+      - "Payment security team"
+      - "Legal (PCI compliance)"
+    informed:
+      - "Customer support"
+      - "Marketing"
+    blockers: "Legal sign-off on token storage approach"
+    skipped: false
+    
+  section_4_scope:
+    must_have:
+      - feature: "One-click checkout"
+        description: "Returning users complete purchase with single tap"
+        acceptance_criteria:
+          - "Saved payment method auto-selected"
+          - "Saved shipping address auto-populated"
+          - "Single 'Buy Now' button completes transaction"
+          - "Completion time < 2 seconds"
+        depends_on: null
+        confidence: "HIGH"
+      - feature: "Express guest checkout"
+        description: "Minimal-field checkout for new users"
+        acceptance_criteria:
+          - "Maximum 5 form fields visible"
+          - "Auto-detect card type from number"
+          - "Address autocomplete via Google Places"
+        depends_on: null
+        confidence: "HIGH"
+    should_have:
+      - feature: "Apple Pay / Google Pay"
+        description: "Native mobile payment integration"
+        acceptance_criteria:
+          - "Payment sheet appears in < 500ms"
+          - "Fallback to standard checkout if unavailable"
+        depends_on:
+          - "Express guest checkout"
+        confidence: "MEDIUM"
+    could_have: null
+    out_of_scope:
+      - "Desktop checkout redesign (separate project)"
+      - "International payment methods (Phase 2)"
+      - "Subscription/recurring billing"
+    non_goals:
+      - "Will not reduce product catalog page load time"
+      - "Will not change cart functionality"
+
+  section_5_technical: null  # Not yet captured
+  section_6_functional: null
+  section_7_nfr: null
+  section_8_data: null
+  section_9_api: null
+  section_10_dependencies: null
+  section_11_risks: null
+  section_12_validation: null
+  
+  section_13_current_state:
+    what_works:
+      - component: "Stripe integration"
+        why_works: "Reliable, well-tested"
+        preserve: true
+      - component: "Order confirmation emails"
+        why_works: "High deliverability, good templates"
+        preserve: true
+    pain_points:
+      - issue: "Payment form iFrame loads slowly"
+        severity: "HIGH"
+        impact: "2-3 second delay on every checkout"
+        frequency: "Every transaction"
+        root_cause: "Stripe Elements loaded synchronously"
+    technical_debt:
+      - item: "jQuery dependency in checkout"
+        risk_if_ignored: "Security vulnerabilities, performance"
+        effort: "MEDIUM"
+        priority: "SHOULD"
+    tribal_knowledge:
+      - "Stripe webhook endpoint has undocumented 5-second timeout — must respond fast"
+      - "iOS Safari has bug with autofill — use specific input attributes"
+      - "Legacy discount code system must be called before payment capture"
+    operational_burden:
+      maintenance_hours_week: 3
+      oncall_incidents_month: 2
+      deploy_frequency: "Weekly"
+      deploy_pain: 4
+      onboarding_days: 5
+    skipped: false
+
+# === EXISTING PROJECT SPECIFIC ===
+existing_project:
+  original_problem: "Needed checkout flow for launch in 2019"
+  what_actually_happened: "Built fast for launch, accumulated debt, mobile was afterthought"
+  keep:
+    - feature: "Stripe integration"
+      reason: "Works well, team knows it"
+    - feature: "Order confirmation flow"
+      reason: "Reliable, good UX"
+    - feature: "Inventory check"
+      reason: "Prevents overselling"
+  modify:
+    - feature: "Payment form"
+      current_issue: "Slow iFrame loading"
+      proposed: "Preload Stripe Elements, optimize render"
+      priority: "MUST"
+      breaking: false
+    - feature: "Address form"
+      current_issue: "Too many fields"
+      proposed: "Single-line with autocomplete"
+      priority: "MUST"
+      breaking: false
+  add:
+    - feature: "Saved payment methods"
+      why_needed: "Enable one-click checkout"
+      priority: "MUST"
+      depends_on: ["User authentication"]
+    - feature: "Apple Pay / Google Pay"
+      why_needed: "Faster mobile checkout"
+      priority: "SHOULD"
+      depends_on: null
+  remove:
+    - feature: "Checkout progress stepper"
+      reason: "Takes vertical space, confuses users about length"
+      migration: "Remove component, no data migration"
+      user_impact: "Positive — cleaner interface"
+  migration_plan: null  # To be captured in Section 8
+
+# === OPEN ITEMS ===
+open_questions:
+  - question: "Can we store payment tokens indefinitely or is there a PCI limit?"
+    owner: "Legal team"
+    due_date: "2025-01-20"
+    status: "OPEN"
+    resolution: null
+  - question: "What's the Stripe fee difference for saved cards vs new?"
+    owner: "Finance"
+    due_date: "2025-01-18"
+    status: "OPEN"
+    resolution: null
+
+conflicts: []
+
+needs_followup:
+  - item: "Performance budget for checkout page"
+    section: 7
+    reason: "User said 'fast' but didn't quantify"
+
+# === MATERIALS ===
+materials:
+  uploaded:
+    - filename: "checkout-analytics-q4.pdf"
+      type: "OTHER"
+      processed: true
+    - filename: "competitor-analysis.docx"
+      type: "OTHER"
+      processed: true
+  extracted_data:
+    - source: "checkout-analytics-q4.pdf"
+      field: "success_metric"
+      value: "68% cart abandonment rate"
+      confidence: "HIGH"
+    - source: "competitor-analysis.docx"
+      field: "interview_data.section_1_problem"
+      value: "Amazon 1-click as competitive benchmark"
+      confidence: "MEDIUM"
+
+# === HISTORY ===
+history:
+  - timestamp: "2025-01-13T10:00:00Z"
+    instance_id: "instance-001"
+    action: "Session created"
+    phase: "OPENING"
+    notes: null
+  - timestamp: "2025-01-13T10:05:00Z"
+    instance_id: "instance-001"
+    action: "Opening sequence complete"
+    phase: "OPENING"
+    notes: "type=EXISTING, complexity=MEDIUM, format=MARKDOWN"
+  - timestamp: "2025-01-13T10:45:00Z"
+    instance_id: "instance-001"
+    action: "Checkpoint offered and accepted"
+    phase: "INTERVIEW"
+    notes: "Sections 1-3 complete. User requested pause."
+  - timestamp: "2025-01-13T11:00:00Z"
+    instance_id: "instance-002"
+    action: "Session resumed"
+    phase: "INTERVIEW"
+    notes: "New instance, loaded from handoff payload"
+  - timestamp: "2025-01-13T11:30:00Z"
+    instance_id: "instance-002"
+    action: "Section 4 complete"
+    phase: "INTERVIEW"
+    notes: "Scope captured: Keep 3, Modify 2, Add 2, Remove 1"
+  - timestamp: "2025-01-13T11:45:00Z"
+    instance_id: "instance-002"
+    action: "Section 13 captured early"
+    phase: "INTERVIEW"
+    notes: "User shared tribal knowledge proactively. Captured before technical sections."
+```
+
+---
+
+## How to Resume This Session
+
+A new instance receiving this payload would:
+
+1. **Read routing state:**
+   - `phase: INTERVIEW`
+   - `current_module: interview-full-existing.md`
+   - `current_section: 5`
+   - `resume_point: "Sections 1-4 complete. Begin Section 5, Q1: 'What's the current architecture?'"`
+
+2. **Check what's captured:**
+   - All hard_reqs populated and quality_passed
+   - Sections 1-4, 13 complete
+   - Sections 5-12 remaining
+
+3. **Begin Section 5:**
+   > "Picking up where we left off — we've captured the problem, users, stakeholders, and scope. Now let's dig into the technical side.
+   > 
+   > What's the current architecture? Walk me through the stack and how checkout is deployed."
+
+4. **Update payload after Section 5:**
+   ```yaml
+   routing:
+     current_section: 6
+     sections_complete: [1, 2, 3, 4, 5, 13]
+     resume_point: "Section 5 complete. Current stack: Rails 7, Heroku, Stripe. Begin Section 6 (Functional), feature detail for one-click checkout."
+   interview_data:
+     section_5_technical:
+       stack: "Rails 7.1, PostgreSQL 15, Redis, Heroku (2 dynos)"
+       # ... rest of captured data
+   ```
