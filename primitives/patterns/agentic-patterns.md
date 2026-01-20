@@ -18,9 +18,10 @@ These sections define the "Skill" or "Command" architecture in agentic tools lik
 | **description** | Description of the skill. Required | Frontmatter |
 | **model** | Name of the model to use with this skill. Optional | Frontmatter |
 | **argument-hint** | Variables passed to this skill (ex: [branch-name] [port-offset]), assigned to positional variables. Optional | Frontmatter |
-| **allowed-tools** | Tool calls this skill is allowed to make (ex: Bash, Read, Write, Edit, Glob, Grep). Optional | Frontmatter |
+| **tools** | Tool calls this skill is allowed to make (ex: Bash, Read, Write, Edit, Glob, Grep). Optional | Frontmatter |
 | **Purpose** | High-level mission statement; helps the agent decide when to use the skill. | Main Body |
 | **Variables** | Dynamic inputs required (paths, branch names, API keys). Variables are positional (ex: $1 is the first variable passed to this skill) | Main Body |
+| **Structure** | Relevant files, directories, or architectural context the agent needs to understand before executing. | Main Body |
 | **Instructions** | The core logic telling the agent *how* to execute the task. | Main Body |
 | **Workflow** | The deterministic, step-by-step sequence to be followed. | Main Body |
 | **Report** | The template for summarizing output results to the user. | Main Body |

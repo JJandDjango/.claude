@@ -1,4 +1,5 @@
 debug/
+cache/
 projects/
 history.jsonl
 shell-snapshots/
