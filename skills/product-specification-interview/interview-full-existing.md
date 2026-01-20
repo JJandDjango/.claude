@@ -1,10 +1,8 @@
 ---
-name: interview-full-existing
+name: product-spec-interview-full-existing
 description: Complete 13-section interview for existing projects with tribal knowledge capture (45-180 min).
 parent: product-spec-interview
-phase: INTERVIEW
-complexity: MEDIUM | COMPLEX
-project_type: EXISTING
+tools: Read, Write
 ---
 
 # Interview Module: Full - Existing Projects
@@ -267,3 +265,29 @@ resume_point: "Sections 1-11 complete. Past incidents documented: [list]. Begin 
 - `existing_project` payload section tracks keep/modify/add/remove
 - Tribal knowledge items go in `interview_data.section_13_current_state.tribal_knowledge`
 - Always note source of tribal knowledge (who said it)
+
+## Success Criteria
+
+- [ ] All applicable sections completed (1-13 based on complexity)
+- [ ] Hard requirements captured: problem_statement, success_metric, must_have_feature, primary_user
+- [ ] Each hard requirement has quality flags set
+- [ ] Keep/Modify/Add/Remove scope documented
+- [ ] Tribal knowledge captured in Section 13
+- [ ] Migration and backward compatibility addressed
+- [ ] Conflicts documented with resolution status
+- [ ] Payload updated with accurate resume_point after each section
+
+## Report
+
+| Field | Value |
+|-------|-------|
+| **Status** | [Complete \| In Progress \| Paused] |
+| **Complexity** | [Medium \| Complex] |
+| **Sections Complete** | [X/13] |
+| **Scope Changes** | Keep:[n] Modify:[n] Add:[n] Remove:[n] |
+| **Tribal Knowledge Items** | [count] |
+| **Hard Reqs Status** | [X/4 captured, Y/4 quality-passed] |
+| **Breaking Changes** | [count or None] |
+| **Conflicts** | [count or None] |
+| **Sessions** | [instance_count] |
+| **Next Action** | [gate.md \| Continue Section X \| Paused] |

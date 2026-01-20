@@ -1,9 +1,8 @@
 ---
 name: product-spec-interview
 description: Generate product specifications through structured interviews with multi-phase validation.
-version: 7.2
-multi_instance: true
-thread_type: chained
+tools: Read, Write, Edit, Glob
+argument-hint: [project-name] [handoff-file-path]
 ---
 
 # Purpose
@@ -12,12 +11,16 @@ Generate comprehensive product specifications through structured interviews. Thi
 
 ## Variables
 
-- `$1`: Project name or slug (Optional; used for handoff file naming)
-- `$2`: Handoff file path (Optional; for resuming existing sessions)
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `$1` | Project name or slug (used for handoff file naming) | Optional |
+| `$2` | Handoff file path (for resuming existing sessions) | Optional |
 
 ## Thread Integration
 
-**Thread Type:** Chained (C)
+**Thread Type:** Chained (C)  
+**Version:** 7.2  
+**Multi-Instance:** Yes
 
 This skill implements a Chained Thread pattern with mandatory handoffs between phases and human checkpoints throughout.
 

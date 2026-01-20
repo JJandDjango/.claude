@@ -1,8 +1,8 @@
 ---
-name: output-core
+name: product-spec-interview-output
 description: Handles template selection, format adaptation, and spec generation.
 parent: product-spec-interview
-phase: OUTPUT
+tools: Read, Write, Glob
 ---
 
 # Output Core: Selection & Generation Logic
@@ -316,3 +316,26 @@ session:
 ```
 
 Save final payload with `.COMPLETE` suffix for reference.
+
+## Success Criteria
+
+- [ ] Correct template selected based on classification
+- [ ] Format adaptations applied for target platform
+- [ ] Version number and status assigned appropriately
+- [ ] All hard requirements populated in spec
+- [ ] Missing/incomplete data clearly marked
+- [ ] Executive summary presented first
+- [ ] User prompted for clarification or expansion
+- [ ] Payload updated with output_generated flag
+
+## Report
+
+| Field | Value |
+|-------|-------|
+| **Status** | [Complete \| Partial \| Discovery] |
+| **Template** | [lite \| full-new \| full-existing \| discovery] |
+| **Format** | [Markdown \| Notion \| Confluence \| Google Docs \| Linear/Jira] |
+| **Version** | [X.Y] |
+| **Spec Status** | [Draft \| In Review \| RC \| Approved] |
+| **Completeness** | [Full \| Partial - missing sections] |
+| **Output File** | [filename or inline] |

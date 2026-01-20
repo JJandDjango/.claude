@@ -1,8 +1,8 @@
 ---
-name: gate
+name: product-spec-interview-gate
 description: Validates hard requirements and quality checks before output generation.
 parent: product-spec-interview
-phase: GATE
+tools: Read, Write
 ---
 
 # Gate Module: Validation & Quality Checks
@@ -299,6 +299,28 @@ history:
     phase: GATE
     notes: "Failed check: [which]. Returning to interview."
 ```
+
+---
+
+## Success Criteria
+
+- [ ] All four hard requirements are non-null (presence check)
+- [ ] All four hard requirements pass quality validation
+- [ ] Complexity level accurately reflects discovered scope
+- [ ] Required sections for complexity level are complete
+- [ ] User confirmed readback summary
+- [ ] Payload updated with gate results and routing
+
+## Report
+
+| Field | Value |
+|-------|-------|
+| **Status** | [Passed \| Failed \| Discovery] |
+| **Presence Check** | [4/4 \| X/4 missing] |
+| **Quality Check** | [4/4 \| X/4 failed] |
+| **Escalation** | [None \| Simple→Medium \| Medium→Complex] |
+| **Readback** | [Confirmed \| Pending] |
+| **Next Module** | [output-core.md \| interview-*.md \| discovery] |
 
 ---
 
