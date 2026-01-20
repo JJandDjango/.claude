@@ -1,5 +1,5 @@
 ---
-name: handoff-schema
+name: product-spec-interview-handoff-schema
 description: Defines the portable state structure for multi-instance execution.
 parent: product-spec-interview
 extends: primitives/handoff.md

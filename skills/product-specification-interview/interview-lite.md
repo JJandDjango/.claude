@@ -1,9 +1,8 @@
 ---
-name: interview-lite
+name: product-spec-interview-lite
 description: Streamlined 4-section interview for simple projects (10-15 min).
 parent: product-spec-interview
-phase: INTERVIEW
-complexity: SIMPLE
+tools: Read, Write
 ---
 
 # Interview Module: Lite (Simple Projects)
@@ -203,3 +202,25 @@ resume_point: "Sections 1-2 complete. Users: [summary]. Begin Section 3, Q1: 'Wh
 # Mid-Section 3 (multiple features)
 resume_point: "Section 3 in progress. Captured features: [list]. Remaining: acceptance criteria for [feature]. Ask: 'What does done look like for [feature]?'"
 ```
+
+## Success Criteria
+
+- [ ] Section 1 complete with problem, success metric, primary user
+- [ ] Section 2 complete with user workflow documented
+- [ ] Section 3 complete with at least one must-have feature + acceptance criteria
+- [ ] Section 4 complete with tech stack and one risk noted
+- [ ] All hard requirements captured and quality-flagged
+- [ ] Escalation check performed before gate transition
+- [ ] Payload updated with accurate resume_point
+
+## Report
+
+| Field | Value |
+|-------|-------|
+| **Status** | [Complete \| In Progress \| Paused] |
+| **Sections Complete** | [X/4] |
+| **Features Captured** | [count] |
+| **Hard Reqs Status** | [X/4 captured] |
+| **Escalation** | [None \| Triggered to Medium] |
+| **Duration** | [estimated minutes] |
+| **Next Action** | [gate.md \| Continue Section X \| Paused] |

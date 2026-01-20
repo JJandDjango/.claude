@@ -1,10 +1,8 @@
 ---
-name: interview-full-new
+name: product-spec-interview-full-new
 description: Complete 12-section interview for new projects (medium/complex, 25-90 min).
 parent: product-spec-interview
-phase: INTERVIEW
-complexity: MEDIUM | COMPLEX
-project_type: NEW
+tools: Read, Write
 ---
 
 # Interview Module: Full - New Projects
@@ -301,3 +299,26 @@ resume_point: "Sections 1-9 complete. Technical context captured. Begin Section 
 - Summarize captured data at session end
 - Include key details in resume_point
 - Reference specific user statements that need follow-up
+
+## Success Criteria
+
+- [ ] All applicable sections completed (based on complexity level)
+- [ ] Hard requirements captured: problem_statement, success_metric, must_have_feature, primary_user
+- [ ] Each hard requirement has quality flags set
+- [ ] Conflicts documented with resolution status
+- [ ] Checkpoint offered if session exceeded 15 exchanges
+- [ ] Payload updated with accurate resume_point after each section
+
+## Report
+
+| Field | Value |
+|-------|-------|
+| **Status** | [Complete \| In Progress \| Paused] |
+| **Complexity** | [Medium \| Complex] |
+| **Sections Complete** | [X/12] |
+| **Features Captured** | [count] |
+| **Hard Reqs Status** | [X/4 captured, Y/4 quality-passed] |
+| **Conflicts** | [count or None] |
+| **Sessions** | [instance_count] |
+| **Duration** | [estimated minutes] |
+| **Next Action** | [gate.md \| Continue Section X \| Paused] |
