@@ -8,3 +8,5 @@ statsig/
 todos/
 .credentials.json
 plans/
+prompt_lang/__pycache__/
+prompt_lang/tests/__pycache__/

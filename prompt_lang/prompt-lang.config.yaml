@@ -39,3 +39,6 @@ validation:
       - model
       - argument-hint
       - tools
+      - agent
+      - reference
+      - color

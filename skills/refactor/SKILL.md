@@ -1,92 +1,100 @@
 ---
 name: refactor
-description: Reviews prompt and skill files against repository standards and generates actionable change proposals. Ensures all .md files conform to patterns defined in primitives/patterns/agentic-patterns.md.
+description: Migrates prompt files to the Prompt Programming Language specification. Validates files using prompt_lang and converts non-compliant markdown to XML tag format.
+agent: developer
+tools: Bash, Read, Edit
 ---
 
-# Purpose
+# Refactor
 
-Review prompt and skill files against repository standards and generate actionable change proposals. Ensures all `.md` files conform to the patterns defined in `primitives/patterns/agentic-patterns.md`.
+<purpose>
+Migrate prompt files to comply with the Prompt Programming Language specification. Run validation, identify issues, and convert markdown-headed sections to XML tags.
+</purpose>
 
-## Variables
-
+<variables>
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `$1` | Target file or directory to analyze (FILEPATH) | Required (prompt if missing) |
+| `$1` | Target file or directory to migrate | Required |
+</variables>
 
-## Thread Integration
+<context>
+The Prompt Programming Language uses XML tags to distinguish execution from documentation.
 
-**Thread Type:** Base (B)
+**Required tags:** purpose, instructions
 
-This skill is a **standards analyzer** that initiates refactor workflows.
+**Optional tags:** variables, context, workflow, constraints, examples, output, criteria
 
-| Context | Usage |
-|---------|-------|
-| **Base Thread (B)** | Quick compliance check on single files |
-| **Exploration (E)** | Discovery phase - audit repository for non-compliance |
-| **Refactor (R)** | Pre-implementation analysis before bulk updates |
+**Validation tool location:** prompt_lang package in this repository
 
-**Workflow Position**:
-1. `refactor` skill generates `proposed-changes.md`
-2. Orchestrator routes to `@developer` for implementation
-3. `@verifier` validates compliance post-implementation
+**Common migrations (markdown heading to XML tag):**
 
-**Output Handoff**: `proposed-changes.md` serves as input for Developer agent.
+| Old Format | New Format |
+|------------|------------|
+| `## Purpose` | purpose tag |
+| `## Instructions` | instructions tag |
+| `## Variables` | variables tag |
+| `## Context` or `## Structure` | context tag |
+| `## Workflow` | workflow tag |
+| `## Constraints` | constraints tag |
+| `## Examples` | examples tag |
+| `## Report` or `## Output` | output tag |
+| `## Success Criteria` | criteria tag |
 
-## Instructions
+**Frontmatter requirements:**
+- `name` (required)
+- `description` (required)
+- `model`, `tools`, `argument-hint`, `agent` (optional)
 
-1. **Pattern Matching**: Compare target files against `primitives/patterns/agentic-patterns.md` for structural compliance
-2. **Recursive Analysis**: When given a directory, scan all `.md` files and evaluate each independently
-3. **Non-Destructive**: Do not modify files directly. Output proposed changes for human review
-4. **Precision**: Be specific about line-level changes needed, referencing exact sections
+**Reference:** See prompt_lang/tests/fixtures/valid/ for valid examples.
+</context>
 
-## Constraints
+<instructions>
+1. Run the validator on the target path
+   ```bash
+   python -m prompt_lang.validate $1
+   ```
+2. If validation passes, report success and stop
+3. If validation fails, read each failing file
+4. For each failing file:
+   - Add YAML frontmatter if missing (name, description fields)
+   - Convert markdown headings to their corresponding XML tags
+   - Remove ambiguous/hedging language from instructions (see config for patterns)
+   - Ensure no nested tags (all tags must be top-level)
+5. Re-run validation to confirm fixes
+   ```bash
+   python -m prompt_lang.validate $1
+   ```
+6. Report results
+</instructions>
 
-- Do NOT modify files directly - output proposals only
-- Do NOT propose changes to files that already comply with standards
-- Do NOT reference pattern violations without citing the specific standard
-- Do NOT scope beyond `.md` files within the Agentic OS repository structure
+<workflow>
+VALIDATE -> if PASS: done -> if FAIL: READ files -> MIGRATE to XML tags -> RE-VALIDATE -> REPORT
+</workflow>
 
-## Workflow
+<constraints>
+- Do not delete content, only restructure it
+- Do not modify files that already pass validation
+- Do not add tags that have no corresponding content
+- Do not nest XML tags inside each other
+- Do not use ambiguous language in instructions
+</constraints>
 
-```
-1. VALIDATE   -> If no FILEPATH provided, prompt user and end
-2. LOAD       -> Read primitives/patterns/agentic-patterns.md
-               Read primitives/handoff.md (for transition patterns)
-3. SCAN       -> Glob FILEPATH recursively for all .md files
-4. COMPARE    -> Check each file against standard sections:
-               - Frontmatter (name, description)
-               - Purpose
-               - Variables
-               - Structure (if applicable)
-               - Instructions
-               - Constraints (if applicable)
-               - Workflow
-               - Report
-5. GENERATE   -> Create proposed-changes.md with remediation tasks
-```
-
-## Success Criteria
-
-- [ ] Target path validated (file or directory exists)
-- [ ] `primitives/patterns/agentic-patterns.md` loaded as reference
-- [ ] All `.md` files in scope identified
-- [ ] Each file compared against standard sections
-- [ ] Non-compliant files documented with specific violations
-- [ ] `proposed-changes.md` generated with actionable remediation tasks
-- [ ] Compliant files excluded from proposals
-- [ ] Line-level change references provided where applicable
-
-## Report
-
+<output>
 | Field | Value |
 |-------|-------|
-| **Scope** | [Files analyzed] |
-| **Compliant** | [Count of files meeting standards] |
-| **Non-Compliant** | [Count of files requiring updates] |
-| **Output** | `proposed-changes.md` |
+| **Target** | $1 |
+| **Files checked** | [count] |
+| **Already compliant** | [count] |
+| **Migrated** | [count] |
+| **Status** | [PASS / FAIL] |
+</output>
 
-## Next Steps
-
-After generating `proposed-changes.md`, the Orchestrator should:
-1. Route to `@developer` to implement approved changes
-2. Route to `@verifier` to validate compliance post-implementation
+<criteria>
+- [ ] Validator run on target path
+- [ ] All failing files identified
+- [ ] Each file migrated to XML tag format
+- [ ] Frontmatter present with name and description
+- [ ] No ambiguous language in instructions
+- [ ] No nested tags
+- [ ] Re-validation passes
+</criteria>

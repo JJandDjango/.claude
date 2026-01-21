@@ -112,18 +112,23 @@ def parse_content(
         content, lines, result, config
     )
 
-    # Step 2: Extract and validate tags
+    # Step 2: Check for reference flag - skip further validation if set
+    if parsed.frontmatter and parsed.frontmatter.get("reference") is True:
+        result.token_count = _count_tokens(content)
+        return parsed, result
+
+    # Step 3: Extract and validate tags
     body_start = parsed.frontmatter_end_line
     body_content = "\n".join(lines[body_start:])
     parsed.tags = _extract_tags(body_content, body_start, lines, result, config)
 
-    # Step 3: Check for nesting violations
+    # Step 4: Check for nesting violations
     _check_nesting(body_content, body_start, lines, result, config)
 
-    # Step 4: Check required tags
+    # Step 5: Check required tags
     _check_required_tags(parsed, result, config)
 
-    # Step 5: Count tokens
+    # Step 6: Count tokens
     parsed_token_count = _count_tokens(content)
     result.token_count = parsed_token_count
     _check_token_limits(parsed_token_count, result, config)

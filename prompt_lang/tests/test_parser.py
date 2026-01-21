@@ -3,6 +3,7 @@
 from pathlib import Path
 
 import pytest
+
 from prompt_lang.config import Config, load_config
 from prompt_lang.errors import ValidationResult
 from prompt_lang.parser import ParsedPrompt, parse_content, parse_file
@@ -357,3 +358,44 @@ This is the purpose.
         assert result.passed, f"Expected pass but got: {result}"
         assert parsed.has_tag("purpose")
         assert parsed.has_tag("instructions")
+
+    def test_reference_flag_skips_validation(self):
+        """Files with reference: true should skip tag validation."""
+        content = """---
+name: reference-doc
+description: A reference document
+reference: true
+---
+
+# Reference Document
+
+This is a reference document without required tags.
+It should pass validation because reference: true is set.
+"""
+        result = ValidationResult(file_path="test.md")
+        config = load_config()
+
+        parsed, result = parse_content(content, result, config)
+
+        assert result.passed, f"Expected pass but got: {result}"
+        assert parsed.frontmatter["reference"] is True
+
+    def test_reference_false_still_validates(self):
+        """Files with reference: false should still validate normally."""
+        content = """---
+name: not-reference
+description: Not a reference document
+reference: false
+---
+
+# Not Reference
+
+Missing required tags should fail.
+"""
+        result = ValidationResult(file_path="test.md")
+        config = load_config()
+
+        parsed, result = parse_content(content, result, config)
+
+        assert not result.passed
+        assert any("<purpose>" in e.message for e in result.errors)
