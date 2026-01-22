@@ -1,0 +1,44 @@
+# Prompt Programming Language Configuration
+
+validation:
+  tokens:
+    warn_at: 2000
+    fail_at: 4000
+
+  semantic_check: true
+
+  required_tags:
+    - purpose
+    - instructions
+
+  optional_tags:
+    - variables
+    - context
+    - workflow
+    - constraints
+    - examples
+    - output
+    - criteria
+
+  ambiguous_patterns:
+    - "maybe"
+    - "might"
+    - "consider"
+    - "optionally"
+    - "try to"
+    - "possibly"
+    - "it would be good to"
+    - "you could"
+    - "perhaps"
+
+  frontmatter:
+    required:
+      - name
+      - description
+    optional:
+      - model
+      - argument-hint
+      - tools
+      - agent
+      - reference
+      - color
