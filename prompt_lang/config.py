@@ -59,6 +59,8 @@ class ValidationConfig:
         ]
     )
     frontmatter: FrontmatterConfig = field(default_factory=FrontmatterConfig)
+    enforce_tag_order: bool = False
+    tag_order: list[str] = field(default_factory=list)
 
     @property
     def all_tags(self) -> list[str]:
@@ -153,6 +155,8 @@ def _parse_config(data: dict[str, Any]) -> Config:
             ],
         ),
         frontmatter=frontmatter,
+        enforce_tag_order=v.get("enforce_tag_order", False),
+        tag_order=v.get("tag_order", []),
     )
 
     return Config(validation=validation)

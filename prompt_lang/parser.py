@@ -128,7 +128,10 @@ def parse_content(
     # Step 5: Check required tags
     _check_required_tags(parsed, result, config)
 
-    # Step 6: Count tokens
+    # Step 6: Check tag order
+    _check_tag_order(parsed, result, config)
+
+    # Step 7: Count tokens
     parsed_token_count = _count_tokens(content)
     result.token_count = parsed_token_count
     _check_token_limits(parsed_token_count, result, config)
@@ -318,6 +321,54 @@ def _check_required_tags(
     for tag_name in config.validation.required_tags:
         if not parsed.has_tag(tag_name):
             result.add_error(0, f"Missing required tag: <{tag_name}>")
+
+
+def _check_tag_order(
+    parsed: ParsedPrompt, result: ValidationResult, config: Config
+) -> None:
+    """Check that tags appear in the configured order.
+
+    Only checks tags that are present in the document. Tags not in tag_order
+    are ignored.
+    """
+    if not config.validation.enforce_tag_order:
+        return
+
+    tag_order = config.validation.tag_order
+    if not tag_order:
+        return
+
+    # Get actual tag names in document order
+    actual_tags = [tag.name.lower() for tag in parsed.tags]
+
+    # Filter to only tags that are in the configured order
+    actual_ordered = [t for t in actual_tags if t in tag_order]
+
+    # Get expected order for tags that are present
+    expected_ordered = [t for t in tag_order if t in actual_tags]
+
+    # Compare
+    if actual_ordered != expected_ordered:
+        # Find the first out-of-order tag
+        for i, actual_tag in enumerate(actual_ordered):
+            if i >= len(expected_ordered) or actual_tag != expected_ordered[i]:
+                # Find the tag object to get line number
+                tag_obj = parsed.get_tag(actual_tag)
+                line_num = tag_obj.start_line if tag_obj else 0
+
+                # Determine what was expected
+                if i < len(expected_ordered):
+                    expected_tag = expected_ordered[i]
+                    result.add_error(
+                        line_num,
+                        f"Tag <{actual_tag}> is out of order: expected <{expected_tag}> at this position",
+                    )
+                else:
+                    result.add_error(
+                        line_num,
+                        f"Tag <{actual_tag}> is out of order",
+                    )
+                break
 
 
 def _count_tokens(content: str) -> int:

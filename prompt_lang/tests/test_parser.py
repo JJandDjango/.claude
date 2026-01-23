@@ -284,6 +284,207 @@ class TestParsedPrompt:
         assert not parsed.has_tag("nonexistent")
 
 
+class TestTagOrder:
+    """Tests for tag order validation."""
+
+    def test_correct_order_passes(self):
+        """Tags in correct order should pass."""
+        content = """---
+name: ordered-prompt
+description: Tags in correct order
+---
+
+# Ordered Prompt
+
+<purpose>
+The purpose.
+</purpose>
+
+<instructions>
+1. Do something
+</instructions>
+
+<output>
+The output format.
+</output>
+"""
+        result = ValidationResult(file_path="test.md")
+        config = load_config()
+        config.validation.enforce_tag_order = True
+        config.validation.tag_order = ["purpose", "instructions", "output"]
+
+        parsed, result = parse_content(content, result, config)
+
+        assert result.passed, f"Expected pass but got: {result}"
+
+    def test_incorrect_order_fails(self):
+        """Tags in wrong order should fail."""
+        content = """---
+name: unordered-prompt
+description: Tags in wrong order
+---
+
+# Unordered Prompt
+
+<instructions>
+1. Do something
+</instructions>
+
+<purpose>
+The purpose.
+</purpose>
+"""
+        result = ValidationResult(file_path="test.md")
+        config = load_config()
+        config.validation.enforce_tag_order = True
+        config.validation.tag_order = ["purpose", "instructions"]
+
+        parsed, result = parse_content(content, result, config)
+
+        assert not result.passed
+        assert any("out of order" in e.message.lower() for e in result.errors)
+
+    def test_order_enforcement_disabled(self):
+        """When enforce_tag_order is False, order should not be checked."""
+        content = """---
+name: unordered-prompt
+description: Tags in wrong order but enforcement disabled
+---
+
+# Unordered Prompt
+
+<instructions>
+1. Do something
+</instructions>
+
+<purpose>
+The purpose.
+</purpose>
+"""
+        result = ValidationResult(file_path="test.md")
+        config = load_config()
+        config.validation.enforce_tag_order = False
+        config.validation.tag_order = ["purpose", "instructions"]
+
+        parsed, result = parse_content(content, result, config)
+
+        assert result.passed, f"Expected pass but got: {result}"
+
+    def test_empty_tag_order_skips_check(self):
+        """When tag_order is empty, order should not be checked."""
+        content = """---
+name: unordered-prompt
+description: Tags in any order
+---
+
+# Unordered Prompt
+
+<instructions>
+1. Do something
+</instructions>
+
+<purpose>
+The purpose.
+</purpose>
+"""
+        result = ValidationResult(file_path="test.md")
+        config = load_config()
+        config.validation.enforce_tag_order = True
+        config.validation.tag_order = []
+
+        parsed, result = parse_content(content, result, config)
+
+        assert result.passed, f"Expected pass but got: {result}"
+
+    def test_partial_tags_in_order(self):
+        """Only tags present in document should be checked for order."""
+        content = """---
+name: partial-prompt
+description: Only some tags present
+---
+
+# Partial Prompt
+
+<purpose>
+The purpose.
+</purpose>
+
+<instructions>
+1. Do something
+</instructions>
+"""
+        result = ValidationResult(file_path="test.md")
+        config = load_config()
+        config.validation.enforce_tag_order = True
+        config.validation.tag_order = ["purpose", "context", "instructions", "output"]
+
+        parsed, result = parse_content(content, result, config)
+
+        assert result.passed, f"Expected pass but got: {result}"
+
+    def test_tags_not_in_order_list_ignored(self):
+        """Tags not in tag_order list should be ignored for ordering."""
+        content = """---
+name: extra-tags-prompt
+description: Has tags not in order list
+---
+
+# Extra Tags Prompt
+
+<custom>
+Custom tag not in order list.
+</custom>
+
+<purpose>
+The purpose.
+</purpose>
+
+<instructions>
+1. Do something
+</instructions>
+"""
+        result = ValidationResult(file_path="test.md")
+        config = load_config()
+        config.validation.enforce_tag_order = True
+        config.validation.tag_order = ["purpose", "instructions"]
+        # Add custom to recognized tags so it doesn't fail unrecognized check
+        config.validation.optional_tags.append("custom")
+
+        parsed, result = parse_content(content, result, config)
+
+        assert result.passed, f"Expected pass but got: {result}"
+
+    def test_out_of_order_error_includes_line_number(self):
+        """Out of order error should include line number of offending tag."""
+        content = """---
+name: unordered-prompt
+description: Tags in wrong order
+---
+
+# Unordered Prompt
+
+<instructions>
+1. Do something
+</instructions>
+
+<purpose>
+The purpose.
+</purpose>
+"""
+        result = ValidationResult(file_path="test.md")
+        config = load_config()
+        config.validation.enforce_tag_order = True
+        config.validation.tag_order = ["purpose", "instructions"]
+
+        parsed, result = parse_content(content, result, config)
+
+        assert not result.passed
+        # Error should have a non-zero line number
+        order_errors = [e for e in result.errors if "out of order" in e.message.lower()]
+        assert len(order_errors) > 0
+        assert order_errors[0].line > 0
+
+
 class TestEdgeCases:
     """Tests for edge cases and special scenarios."""
 

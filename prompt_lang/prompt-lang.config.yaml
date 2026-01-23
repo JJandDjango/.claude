@@ -20,6 +20,19 @@ validation:
     - output
     - criteria
 
+  # Tag order enforcement
+  enforce_tag_order: true
+  tag_order:
+    - purpose
+    - variables
+    - context
+    - instructions
+    - workflow
+    - constraints
+    - examples
+    - output
+    - criteria
+
   ambiguous_patterns:
     - "maybe"
     - "might"
