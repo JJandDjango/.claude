@@ -27,10 +27,6 @@ This agent is spawned by the Orchestrator for code changes. After implementation
 6. REPORT what was changed and why in the Thread Report
 </instructions>
 
-<workflow>
-PLAN (propose solution) → EXECUTE (implement) → VERIFY (lint/build) → SYNTHESIZE (handoff report)
-</workflow>
-
 <constraints>
 - Do not bypass the Verifier
 - Do not skip generating a handoff report after implementation

@@ -86,7 +86,6 @@ class ValidationConfig:
         default_factory=lambda: [
             "variables",
             "context",
-            "workflow",
             "constraints",
             "examples",
             "output",
@@ -221,7 +220,6 @@ def _parse_config(data: dict[str, Any]) -> Config:
             [
                 "variables",
                 "context",
-                "workflow",
                 "constraints",
                 "examples",
                 "output",

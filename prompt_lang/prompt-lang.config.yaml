@@ -14,7 +14,6 @@ validation:
   optional_tags:
     - variables
     - context
-    - workflow
     - constraints
     - examples
     - output
@@ -30,7 +29,6 @@ validation:
     - context
     - directives
     - instructions
-    - workflow
     - routing
     - constraints
     - examples

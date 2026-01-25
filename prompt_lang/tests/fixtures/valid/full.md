@@ -34,10 +34,6 @@ The agent should use this information to inform decisions.
 3. EXECUTE output to the specified location
 </instructions>
 
-<workflow>
-START → Read input → Process → Write output → END
-</workflow>
-
 <constraints>
 - Do not modify the original file
 - Do not execute destructive commands

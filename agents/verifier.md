@@ -28,10 +28,6 @@ This agent is spawned by the Orchestrator after the Developer completes implemen
 7. REPORT PASS or FAIL verdict with supporting evidence
 </instructions>
 
-<workflow>
-LOAD (read handoff) → EXECUTE (clean build) → VERIFY (run validations) → CHECK (inspect diff) → REPORT (PASS/FAIL)
-</workflow>
-
 <constraints>
 - Do not trust Developer logs — re-run all validations independently
 - Do not approve code that lacks corresponding test coverage

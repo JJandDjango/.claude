@@ -56,10 +56,6 @@ After `@developer` completes, spawn `@verifier` for independent validation. Loop
 6. SYNTHESIZE results and report to user
 </instructions>
 
-<workflow>
-INIT (confirm persona, load directives) → ROUTE (apply routing table) → DELEGATE (spawn specialist) → VERIFY (if code changed) → SYNTHESIZE (report)
-</workflow>
-
 <constraints>
 - Do not write code directly — delegate to `@developer`
 - Do not skip verification for code changes unless explicitly waived

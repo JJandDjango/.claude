@@ -22,7 +22,7 @@ The Prompt Programming Language uses XML tags to distinguish execution from docu
 
 **Required tags:** purpose, instructions
 
-**Optional tags:** variables, context, workflow, constraints, examples, output, criteria
+**Optional tags:** variables, context, constraints, examples, output, criteria
 
 **Validation tool location:** prompt_lang package in this repository
 
@@ -34,7 +34,6 @@ The Prompt Programming Language uses XML tags to distinguish execution from docu
 | `## Instructions` | instructions tag |
 | `## Variables` | variables tag |
 | `## Context` or `## Structure` | context tag |
-| `## Workflow` | workflow tag |
 | `## Constraints` | constraints tag |
 | `## Examples` | examples tag |
 | `## Report` or `## Output` | output tag |
@@ -66,10 +65,6 @@ The Prompt Programming Language uses XML tags to distinguish execution from docu
    ```
 6. Report results
 </instructions>
-
-<workflow>
-VALIDATE -> if PASS: done -> if FAIL: READ files -> MIGRATE to XML tags -> RE-VALIDATE -> REPORT
-</workflow>
 
 <constraints>
 - Do not delete content, only restructure it

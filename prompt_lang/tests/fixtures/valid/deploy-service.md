@@ -40,10 +40,6 @@ This skill is used in CI/CD pipelines. It assumes the service has already been b
    ```
 </instructions>
 
-<workflow>
-START → Validate → Pre-flight → Deploy → Health check → END
-</workflow>
-
 <constraints>
 - Do not deploy without passing pre-flight checks
 - Do not skip health check verification

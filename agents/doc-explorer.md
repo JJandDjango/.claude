@@ -40,10 +40,6 @@ This agent creates context bridges for Implementation agents to avoid context ro
 6. REPORT handoff report for Verifier or next agent
 </instructions>
 
-<workflow>
-EXECUTE (Glob/Grep scan) → PARSE (examine files) → SYNTHESIZE (draft changes) → REPORT (generate handoff)
-</workflow>
-
 <constraints>
 - Do not make structural changes without a proposed plan
 - Do not modify files without version control

@@ -24,19 +24,6 @@ Apply routing rules in the following priority order:
 Execute the first matching rule and stop evaluation. Do not apply multiple rules to a single request.
 </instructions>
 
-<workflow>
-## Routing Decision Process
-
-1. Parse user input for explicit `@agent` mentions
-2. If found, route directly to specified agent
-3. If not found, scan input text for keyword patterns (case-insensitive)
-4. Match patterns against routing table below
-5. If pattern matches, route to corresponding agent
-6. Check if request requires chain execution (multiple phases)
-7. If chain detected, initiate first agent in sequence
-8. If no matches found, route to orchestrator (self-handle)
-</workflow>
-
 <routing>
 ## Keyword Patterns
 

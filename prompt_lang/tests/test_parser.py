@@ -41,7 +41,6 @@ class TestValidPrompts:
             "variables",
             "context",
             "instructions",
-            "workflow",
             "constraints",
             "examples",
             "output",
@@ -266,8 +265,8 @@ class TestParsedPrompt:
         """get_tag should return None for missing tags."""
         parsed, result = parse_file(VALID_DIR / "minimal.md")
 
-        workflow = parsed.get_tag("workflow")
-        assert workflow is None
+        variables = parsed.get_tag("variables")
+        assert variables is None
 
     def test_has_tag_returns_true_for_existing(self):
         """has_tag should return True for existing tags."""
@@ -280,7 +279,7 @@ class TestParsedPrompt:
         """has_tag should return False for missing tags."""
         parsed, result = parse_file(VALID_DIR / "minimal.md")
 
-        assert not parsed.has_tag("workflow")
+        assert not parsed.has_tag("variables")
         assert not parsed.has_tag("nonexistent")
 
 

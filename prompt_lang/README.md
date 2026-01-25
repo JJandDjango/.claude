@@ -90,10 +90,6 @@ Background information for the agent.
 3. Write the output
 </instructions>
 
-<workflow>
-START → Read input → Process → Write output → END
-</workflow>
-
 <constraints>
 - Do not modify the original file
 - Do not execute destructive commands
@@ -136,7 +132,6 @@ START → Read input → Process → Write output → END
 | `<instructions>` | Yes | Step-by-step instructions for the agent |
 | `<variables>` | No | Variable definitions (typically as a table) |
 | `<context>` | No | Background information and architectural context |
-| `<workflow>` | No | Process flow diagram or description |
 | `<constraints>` | No | Limitations and boundaries |
 | `<examples>` | No | Input/output examples |
 | `<output>` | No | Expected output format |
@@ -250,7 +245,6 @@ validation:
   optional_tags:
     - variables
     - context
-    - workflow
     - constraints
     - examples
     - output
@@ -263,7 +257,6 @@ validation:
     - variables
     - context
     - instructions
-    - workflow
     - constraints
     - examples
     - output
