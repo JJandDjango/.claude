@@ -43,7 +43,6 @@ Define the foundational concepts and standard patterns for building effective ag
 | `instructions` | Core execution logic | Yes |
 | `variables` | Dynamic inputs | No |
 | `context` | Background/architectural info | No |
-| `workflow` | Step-by-step sequence | No |
 | `constraints` | Boundaries and prohibitions | No |
 | `examples` | Input/output pairs | No |
 | `output` | Response template | No |

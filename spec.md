@@ -58,7 +58,6 @@ Nine semantic XML tags define prompt structure:
 | `<variables>` | Dynamic inputs (paths, args, keys) | Optional |
 | `<context>` | Background, persona, architecture | Optional |
 | `<instructions>` | Execution logic — "do this" | **Yes** |
-| `<workflow>` | Deterministic step-by-step sequence | Optional |
 | `<constraints>` | Boundaries, "do not" rules | Optional |
 | `<examples>` | Input/output pairs | Optional |
 | `<output>` | Report template, response format | Optional |
@@ -143,7 +142,6 @@ The following patterns are **hard failures** inside `<instructions>`:
 | `<variables>` | "What inputs are needed" — dynamic values |
 | `<context>` | "Know this" — reference material, not execution |
 | `<instructions>` | "Do this" — mandatory steps |
-| `<workflow>` | "In this order" — visual sequence |
 | `<constraints>` | "Not this" — explicit prohibitions |
 | `<examples>` | "Like this" — behavioral guidance |
 | `<output>` | "Return this" — expected response structure |
@@ -173,7 +171,6 @@ Located at the top of every file, between `---` delimiters:
 | `## Variables` | `<variables>` |
 | `## Structure` | `<context>` |
 | `## Instructions` | `<instructions>` |
-| `## Workflow` | `<workflow>` |
 | `## Report` | `<output>` |
 | Constraints (Advanced) | `<constraints>` |
 | Few-Shot Examples (Advanced) | `<examples>` |
@@ -215,10 +212,6 @@ Relevant files, directories, or structures.
    ```
 3. Step three
 </instructions>
-
-<workflow>
-START → Validate input → Process → Output → END
-</workflow>
 
 <constraints>
 - Do not do X
@@ -367,7 +360,6 @@ validation:
   optional_tags:
     - variables
     - context
-    - workflow
     - constraints
     - examples
     - output
@@ -542,10 +534,6 @@ This skill is used in CI/CD pipelines. It assumes the service has already been b
    python scripts/healthcheck.py $1 $2
    ```
 </instructions>
-
-<workflow>
-START → Validate → Pre-flight → Deploy → Health check → END
-</workflow>
 
 <constraints>
 - Do not deploy without passing pre-flight checks

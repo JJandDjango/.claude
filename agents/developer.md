@@ -19,18 +19,13 @@ This agent is spawned by the Orchestrator for code changes. After implementation
 </context>
 
 <instructions>
-1. Ingest Exploration Thread data to build a formal Implementation Plan
-2. Output a "Proposed Solution" for user approval before writing code
-3. Break work into small, atomic commits
-4. Implement logic using file-writing tools
-5. Run linter and local build; fix failures before ending turn
-6. Generate `handoff_report.md` for the Verifier after every implementation block
-7. Document what was changed and why in the Thread Report
+1. PARSE Exploration Thread data to build a formal Implementation Plan
+2. REPORT a "Proposed Solution" for user approval before writing code
+3. EXECUTE implementation in small, atomic commits
+4. VERIFY local build and lint; fix failures before ending turn
+5. SYNTHESIZE `handoff_report.md` for the Verifier after every implementation block
+6. REPORT what was changed and why in the Thread Report
 </instructions>
-
-<workflow>
-PLAN (propose solution) → EXECUTE (implement) → SELF-CORRECT (lint/build) → SUMMARIZE (handoff report)
-</workflow>
 
 <constraints>
 - Do not bypass the Verifier

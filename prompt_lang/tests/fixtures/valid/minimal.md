@@ -10,6 +10,6 @@ Demonstrate the minimum required structure for a valid prompt.
 </purpose>
 
 <instructions>
-1. Do the thing
-2. Report the result
+1. EXECUTE the required task
+2. REPORT the result
 </instructions>

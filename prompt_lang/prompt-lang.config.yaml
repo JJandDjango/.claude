@@ -14,7 +14,22 @@ validation:
   optional_tags:
     - variables
     - context
-    - workflow
+    - constraints
+    - examples
+    - output
+    - criteria
+    - routing
+    - directives
+
+  # Tag order enforcement
+  enforce_tag_order: true
+  tag_order:
+    - purpose
+    - variables
+    - context
+    - directives
+    - instructions
+    - routing
     - constraints
     - examples
     - output
@@ -42,3 +57,56 @@ validation:
       - agent
       - reference
       - color
+
+# Directive validation for routing rules
+directives:
+  keywords:
+    - DELEGATE
+    - DEFAULT
+    - CHAIN
+    - REQUIRE
+  patterns:
+    DELEGATE: "^DELEGATE @[\\w-]+ WHEN [\\w, -]+$"
+    DEFAULT: "^DEFAULT @[\\w-]+$"
+    CHAIN: "^CHAIN [\\w-]+: @[\\w-]+( → @[\\w-]+)+$"
+    REQUIRE: "^REQUIRE \\S+ ON \\w+$"
+
+# Instruction action keyword enforcement
+instructions:
+  enforce_actions: true
+  action_keywords:
+    - ROUTE
+    - LOAD
+    - DELEGATE
+    - VERIFY
+    - EXECUTE
+    - SYNTHESIZE
+    - REPORT
+    - PARSE
+    - CHECK
+
+# File-specific tag requirements
+file_rules:
+  - pattern: "*CLAUDE.md"
+    required_tags:
+      - directives
+    forbidden_tags: []
+    skip_frontmatter: true
+    skip_required_tags: true
+  - pattern: "*agents/*.md"
+    required_tags:
+      - purpose
+      - instructions
+    forbidden_tags:
+      - directives
+  - pattern: "*primitives/*.md"
+    required_tags:
+      - purpose
+    forbidden_tags: []
+    skip_frontmatter: false
+    skip_required_tags: false
+  - pattern: "*primitives/patterns/*.md"
+    required_tags: []
+    forbidden_tags: []
+    skip_frontmatter: true
+    skip_required_tags: true
