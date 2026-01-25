@@ -22,19 +22,19 @@ This skill is used in CI/CD pipelines. It assumes the service has already been b
 </context>
 
 <instructions>
-1. Validate the service exists
+1. VERIFY the service exists
    ```bash
    python scripts/check_service.py $1
    ```
-2. Run pre-flight checks
+2. EXECUTE pre-flight checks
    ```bash
    python scripts/preflight.py $1 $2
    ```
-3. Deploy to environment
+3. EXECUTE deployment to environment
    ```bash
    bash scripts/deploy.sh $1 $2
    ```
-4. Verify deployment health
+4. VERIFY deployment health
    ```bash
    python scripts/healthcheck.py $1 $2
    ```

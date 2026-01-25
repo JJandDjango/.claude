@@ -26,12 +26,12 @@ The agent should use this information to inform decisions.
 </context>
 
 <instructions>
-1. Read the input file
+1. LOAD the input file
    ```bash
    cat $1
    ```
-2. Process the data
-3. Write the output to the specified location
+2. PARSE the data
+3. EXECUTE output to the specified location
 </instructions>
 
 <workflow>

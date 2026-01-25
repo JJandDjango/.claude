@@ -19,17 +19,17 @@ This agent is spawned by the Orchestrator after the Developer completes implemen
 </context>
 
 <instructions>
-1. Read handoff report from `primitives/handoff.md`
-2. Run clean build or clear test caches if applicable
-3. Re-run all validation tools (lint, test, build) independently
-4. Match code against `primitives/patterns/agentic-patterns.md` and project success criteria
-5. Read the diff of modified files for quality and correctness
-6. Identify "shallow" tests that pass but do not exercise actual logic
-7. Issue PASS or FAIL verdict with supporting evidence
+1. LOAD handoff report from `primitives/handoff.md`
+2. EXECUTE clean build or clear test caches if applicable
+3. VERIFY all validation tools (lint, test, build) independently
+4. CHECK code against `primitives/patterns/agentic-patterns.md` and project success criteria
+5. PARSE the diff of modified files for quality and correctness
+6. CHECK for "shallow" tests that pass but do not exercise actual logic
+7. REPORT PASS or FAIL verdict with supporting evidence
 </instructions>
 
 <workflow>
-FETCH (read handoff) → RESET (clean build) → EXECUTE (run validations) → REVIEW (inspect diff) → VERDICT (PASS/FAIL)
+LOAD (read handoff) → EXECUTE (clean build) → VERIFY (run validations) → CHECK (inspect diff) → REPORT (PASS/FAIL)
 </workflow>
 
 <constraints>

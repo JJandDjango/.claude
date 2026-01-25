@@ -20,7 +20,7 @@ try:
 except ImportError:
     TIKTOKEN_AVAILABLE = False
 
-from .config import Config, load_config
+from .config import Config, FileRule, load_config
 from .errors import ValidationResult
 
 # Regex patterns
@@ -64,13 +64,16 @@ class ParsedPrompt:
 
 
 def parse_file(
-    file_path: Path | str, config: Config | None = None
+    file_path: Path | str,
+    config: Config | None = None,
+    file_rule: FileRule | None = None,
 ) -> tuple[ParsedPrompt, ValidationResult]:
     """Parse a prompt file and validate its structure.
 
     Args:
         file_path: Path to the prompt file.
         config: Optional config object. If None, loads from default location.
+        file_rule: Optional file-specific rule for this file type.
 
     Returns:
         Tuple of (ParsedPrompt, ValidationResult).
@@ -88,11 +91,14 @@ def parse_file(
         result.add_error(0, f"Failed to read file: {e}")
         return ParsedPrompt(), result
 
-    return parse_content(content, result, config)
+    return parse_content(content, result, config, file_rule)
 
 
 def parse_content(
-    content: str, result: ValidationResult, config: Config
+    content: str,
+    result: ValidationResult,
+    config: Config,
+    file_rule: FileRule | None = None,
 ) -> tuple[ParsedPrompt, ValidationResult]:
     """Parse prompt content and validate structure.
 
@@ -100,6 +106,7 @@ def parse_content(
         content: Raw file content.
         result: ValidationResult to populate.
         config: Configuration object.
+        file_rule: Optional file-specific rule for this file type.
 
     Returns:
         Tuple of (ParsedPrompt, ValidationResult).
@@ -107,10 +114,19 @@ def parse_content(
     parsed = ParsedPrompt(raw_content=content)
     lines = content.split("\n")
 
-    # Step 1: Parse and validate frontmatter
-    parsed.frontmatter, parsed.frontmatter_end_line = _parse_frontmatter(
-        content, lines, result, config
-    )
+    # Check if we should skip frontmatter validation
+    skip_frontmatter = file_rule and file_rule.skip_frontmatter
+    skip_required_tags = file_rule and file_rule.skip_required_tags
+
+    # Step 1: Parse and validate frontmatter (unless skipped)
+    if skip_frontmatter:
+        # No frontmatter expected, start from beginning
+        parsed.frontmatter = None
+        parsed.frontmatter_end_line = 0
+    else:
+        parsed.frontmatter, parsed.frontmatter_end_line = _parse_frontmatter(
+            content, lines, result, config
+        )
 
     # Step 2: Check for reference flag - skip further validation if set
     if parsed.frontmatter and parsed.frontmatter.get("reference") is True:
@@ -125,8 +141,9 @@ def parse_content(
     # Step 4: Check for nesting violations
     _check_nesting(body_content, body_start, lines, result, config)
 
-    # Step 5: Check required tags
-    _check_required_tags(parsed, result, config)
+    # Step 5: Check required tags (unless skipped)
+    if not skip_required_tags:
+        _check_required_tags(parsed, result, config)
 
     # Step 6: Check tag order
     _check_tag_order(parsed, result, config)

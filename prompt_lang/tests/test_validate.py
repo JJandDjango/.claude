@@ -263,7 +263,7 @@ description: Root file
 # Root
 
 <purpose>Test</purpose>
-<instructions>1. Do it</instructions>
+<instructions>1. EXECUTE the task</instructions>
 """)
 
         # Create valid file in subdir
@@ -275,7 +275,7 @@ description: Nested file
 # Nested
 
 <purpose>Test</purpose>
-<instructions>1. Do it</instructions>
+<instructions>1. EXECUTE the task</instructions>
 """)
 
         config = load_config()
