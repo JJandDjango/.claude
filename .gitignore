@@ -9,6 +9,4 @@ stats-cache.json
 statsig/
 todos/
 plans/
-prompt_lang/__pycache__
-prompt_lang/tests/__pycache__
-*.pyc
+__pycache__/
